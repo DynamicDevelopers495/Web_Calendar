@@ -1,29 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>CALENDAR</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="./sample in bootstrap v3/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 </head>
-
+<style type="text/css">
+h1 {
+    font-size: 20px;
+}
+}
+</style>
 <body>
 <div class="container">
+    <fieldset>
             <legend>Calendar</legend>
             <div class="form-group">
                 <label for="dtp_input1" class="col-md-2 control-label">DateTime Picking</label>
-                <div class="input-group date form_datetime col-md-5" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-                    <input class="form-control" size="16" type="text" value="" readonly>
+                <div  id="datetimepicker1" class="input-group date form_datetime col-md-5" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1 ">
+                    <input class="form-control" size="16" type="text" value="" id="app_id" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                </div>
-            </div>
-</div>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span><br>
+                   
+                </div><br><br>
+            <h1> Title </h1>
+            <input id=app_text_title type="text" value=""><br>
+            <h1> Description </h2>
+            <input id=app_text_id  type="text" value=""><br><br>
 
+            <button onclick="create_appointment()">Create Appointment</button>
+            </div>
+        </fieldset>
+</div>
 <script type="text/javascript" src="./sample in bootstrap v3/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./sample in bootstrap v3/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
 <script type="text/javascript">
+        $.ajax({
+        
+        type:"GET",
+        url: "https://honest-eh-63187.herokuapp.com/appointments",
+        success: function(results){
+            for (var i = 0; i < results.length; i++) {
+                console.log(results[i].title);
+                console.log(results[i].event_date);
+                console.log(results[i].description);
+            }
+            console.log(results);
+        }
+    });
+   function create_appointment(){
+      var app_full = $("#datetimepicker1").data("datetimepicker");
+      var event_date = app_full['viewDate'];
+      var title = document.getElementById("app_text_title").value;
+      var description = document.getElementById("app_text_id").value;
+      
+
+    var text = {
+    title : title.valueOf(),
+    description : description.valueOf(),
+    event_date: event_date.getDate() + '/' + event_date.getMonth() + '/' +  event_date.getFullYear()
+    }
+        $.ajax({
+        
+        type:"POST",
+        url: "https://honest-eh-63187.herokuapp.com/appointments",
+        data: JSON.stringify(text),
+        contentType: "application/json",
+        success: function(newAppointment){
+
+        },
+        error: function (errormessage) {
+                console.log(obj);
+                console.log("hata");
+        }
+    });
+
+   }
+
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
@@ -71,6 +127,5 @@
 		forceParse: 0
     });
 </script>
-
 </body>
 </html>
