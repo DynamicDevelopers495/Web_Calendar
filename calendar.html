@@ -33,6 +33,27 @@ h1 {
             </div>
         </fieldset>
 </div>
+	
+<button id="show" type="button"  onclick="showAppointment()" class="btn btn-primary">Click to see Appointments.</button>
+<div class="table-responsive">
+<table id ="list" class="table table-striped" hidden="true" style="width: 50%">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Event_date</th>
+        <th>Created_at</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      </tr>
+    </tbody>
+
+  </table>  
+    </div>
+	
 <script type="text/javascript" src="./sample in bootstrap v3/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./sample in bootstrap v3/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
@@ -127,5 +148,65 @@ h1 {
 		forceParse: 0
     });
 </script>
+
+<script type="text/javascript">
+    var glob = [];
+    
+    $(document).ready(function(){
+    $("#show").click(function(){
+        $("table").show();
+    });
+});
+    $("button").on('click', function() {
+    $(this).prop('disabled', true);
+});
+
+
+    $.get("https://honest-eh-63187.herokuapp.com/appointments", function(data) {    
+        glob = data;
+        for (var i = 0; i < glob.length; i++) {
+            console.log(glob[i].id);
+            console.log(glob[i].title);
+            console.log(glob[i].description);
+            console.log(glob[i].event_date);
+            
+        }
+    });
+
+    
+    function showAppointment() {
+        var table = document.getElementById("list");
+
+        for(var j = 0; j < glob.length; j++) {
+            var row = table.insertRow(j+1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            cell1.innerHTML = glob[j].id;
+            cell2.innerHTML = glob[j].title;
+            cell3.innerHTML = glob[j].description;
+            cell4.innerHTML = glob[j].event_date;
+            cell5.innerHTML = glob[j].created_at;
+            
+
+        }
+    }
+
+
+
+
+   
+        
+
+
+
+
+
+
+</script>
+	
+	
 </body>
 </html>
