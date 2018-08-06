@@ -23,4 +23,4 @@ Things you may want to cover:
 
 * ...
 
-If you want to see our database please go to this link: https://honest-eh-63187.herokuapp.com/appointments
+If you want to see our database please go to this link: http://arcane-hollows-92806.herokuapp.com/appointments
