@@ -87,7 +87,7 @@ h1 {
         $.ajax({
         
         type:"POST",
-        url: "https://honest-eh-63187.herokuapp.com/appointments",
+        url: "http://arcane-hollows-92806.herokuapp.com/appointments",
         data: JSON.stringify(text),
         contentType: "application/json",
         success: function(newAppointment){
@@ -162,7 +162,7 @@ h1 {
 });
 
 
-    $.get("https://honest-eh-63187.herokuapp.com/appointments", function(data) {    
+    $.get("http://arcane-hollows-92806.herokuapp.com/appointments", function(data) {    
         glob = data;
         for (var i = 0; i < glob.length; i++) {
             console.log(glob[i].id);
