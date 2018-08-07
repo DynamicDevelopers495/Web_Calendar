@@ -2,9 +2,14 @@
 <html>
 <head>
     <title>CALENDAR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="./sample in bootstrap v3/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    
 </head>
 <style type="text/css">
 h1 {
@@ -47,20 +52,41 @@ h1 {
     </thead>
     <tbody>
       <tr>
+      <td> 
+        <form>
+    <div class="form-group" style="width: 250px">
+      <label for="usr">Search</label>
+      <input type="text" class="form-control"  id="search2">
+      <button id="search1" type="button"  onclick="search(document.getElementById('search2'))" class="btn btn-primary">Search.</button>
+      <button id="restart" type="button" onclick="restartPage()" class="btn btn-primary">Yenile</button>
+    </div>
+  </form> 
+    </td>
       <td> </td>
       <td> </td>
       <td> </td>
       <td> </td>
       <td> </td>
-      <td> </td>    
+      <td> </td>  
       </tr>
+
     </tbody>
 
+
   </table>  
-    
+
+
+
+
+   
 </div>
 </div>
-    
+
+
+
+
+ 
+
 
     
 <script type="text/javascript" src="./sample in bootstrap v3/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
@@ -154,7 +180,7 @@ h1 {
 
 <script type="text/javascript">
     var glob = [];
-    var glob_button_name = [];
+    
 
     
     $(document).ready(function(){
@@ -173,6 +199,58 @@ h1 {
 
 
     
+    function search(title) {
+        
+        var title = document.getElementById('search2').value;
+        console.log(title);
+        console.log(glob.length);
+        var table = document.getElementById("list");
+        var count = 0;
+
+        for(var i = 0; i <= glob.length; i++) { 
+        document.getElementById("list").deleteRow(0);
+        
+        }
+
+        for(var j = 0; j < glob.length; j++) {
+            if (title == glob[j].title) {
+            var row = table.insertRow(count+1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
+            cell1.innerHTML = glob[j].id;
+            cell2.innerHTML = glob[j].title;
+            cell3.innerHTML = glob[j].description;
+            cell4.innerHTML = glob[j].event_date;
+            cell5.innerHTML = glob[j].created_at;
+            var button = document.createElement("input");
+            button.type = "button";
+            button.name = glob[j].id;
+            button.value = "Delete";
+            button.id = "button" + (j+1);
+            button.className = "btn btn-danger btn-sm";
+            cell6.appendChild(button);
+            count++;
+           
+            button.addEventListener("click", function() {
+            delete_(this.name);
+            });
+
+            }
+
+
+
+
+           }   
+
+
+    }
+
+
     function showAppointment() {
         
         var table = document.getElementById("list");
@@ -185,6 +263,7 @@ h1 {
             var cell4 = row.insertCell(3);
             var cell5 = row.insertCell(4);
             var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
             cell1.innerHTML = glob[j].id;
             cell2.innerHTML = glob[j].title;
             cell3.innerHTML = glob[j].description;
@@ -195,18 +274,27 @@ h1 {
             button.name = glob[j].id;
             button.value = "Delete";
             button.id = "button" + (j+1);
-            button.className = "btn btn-danger btn-xs";
+            button.className = "btn btn-danger btn-sm";
             cell6.appendChild(button);
+
+           
             button.addEventListener("click", function() {
-            deneme(this.name);
-        });
+            delete_(this.name);
+            });
+
+
+           
+       
             
 
         }
     }
 
 
-    function deneme(id) {
+    
+
+
+    function delete_(id) {
         console.log(id);
         $.ajax({
             type: 'DELETE',
@@ -217,6 +305,9 @@ h1 {
         });
     }
 
+    function restartPage() {
+        window.location.reload(true);
+    }
    
         
 
